@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    font-family: Impact, sans-serif;
+    color: ghostwhite;
+}
+
+canvas {
+    border: 1px solid ghostwhite;
+}
