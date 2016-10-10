@@ -1,19 +1,19 @@
-var TIME_DELTA = 1000 / 60;
+var TIME_DELTA = Math.round(1000 / 60);
 
 create = {
     asteroid: function() {
         return {
-            pos: [300, 200]
+            pos: new Vector(300, 200)
         }
     },
     probe: function () {
         return {
-            pos: [200, 100]
+            pos: new Vector(200, 100)
         }
     },
     ship: function () {
         return {
-            pos: [50, 50]
+            pos: new Vector(50, 50)
         }
     }
 };
@@ -23,20 +23,20 @@ draw = {
         var pos = asteroid.pos;
         render_context.strokeStyle = "rgb(170, 80, 70)";
         render_context.beginPath();
-        render_context.arc(pos[0], pos[1], 100, 0, Math.PI * 2);
+        render_context.arc(pos.x, pos.y, 100, 0, Math.PI * 2);
         render_context.stroke();
           },
     probe: function (render_context, probe) {
         var pos = probe.pos;
         render_context.strokeStyle = "rgb(200, 255, 220)";
         render_context.beginPath();
-        render_context.arc(pos[0], pos[1], 5, 0, Math.PI * 2);
+        render_context.arc(pos.x, pos.y, 5, 0, Math.PI * 2);
         render_context.stroke();
           },
     ship: function (render_context, ship) {
         var pos = ship.pos;
         render_context.strokeStyle = "rgb(200, 230, 255)";
-        render_context.strokeRect(pos[0], pos[1], 50, 100);
+        render_context.strokeRect(pos.x, pos.y, 50, 100);
           }
 };
 
@@ -45,13 +45,48 @@ simulate = {
 
     },
     probe: function (probe) {
-        probe.pos = [probe.pos[0] + (10 / 1000 * TIME_DELTA),
-                     probe.pos[1] + (5 / 1000 * TIME_DELTA)];
-        console.log(probe)
+        new_x = probe.pos.x + (10 / 1000 * TIME_DELTA);
+        new_y = probe.pos.y + (5 / 1000 * TIME_DELTA);
+        probe.pos = new Vector(new_x, new_y);
     },
     ship: function (ship) {
 
     }
+};
+
+function Vector(x, y) {
+    this.x = x;
+    this.y = y;
+    this._length = null;
+    this._normal = null;
+}
+
+Vector.prototype.sub = function (other) {
+    return new Vector(this.x - other.x, this.y - other.y)
+};
+
+Vector.prototype.add = function (other) {
+    return new Vector(this.x + other.x, this.y - other.y)
+};
+
+Vector.prototype.length = function() {
+    if (this._length === null) {
+        this._length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.x, 2))
+    }
+    return this._length
+};
+
+Vector.prototype.normal = function () {
+    if (this._normal === null) {
+        this._normal = new Vector(this.x / this.length(), this.y / this.length());
+        this._normal._normal = this._normal;
+    }
+    return this._normal;
+};
+
+Vector.prototype.scale = function(length){
+    var ratio = this.length() / length;
+    return new Vector(this.x * ratio, this.y * ratio);
 };
 
 function run_autominer() {
