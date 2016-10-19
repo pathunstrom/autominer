@@ -1,5 +1,6 @@
 var TIME_DELTA = Math.round(1000 / 60);
 
+// turn into prototype functions
 create = {
     asteroid: function() {
         return {
@@ -8,7 +9,8 @@ create = {
     },
     probe: function () {
         return {
-            pos: new Vector(200, 100)
+            pos: new Vector(200, 100),
+            velocity: new Vector(0.17, -0.085)
         }
     },
     ship: function () {
@@ -45,9 +47,7 @@ simulate = {
 
     },
     probe: function (probe) {
-        new_x = probe.pos.x + (10 / 1000 * TIME_DELTA);
-        new_y = probe.pos.y + (5 / 1000 * TIME_DELTA);
-        probe.pos = new Vector(new_x, new_y);
+        probe.pos = probe.pos.add(probe.velocity)
     },
     ship: function (ship) {
 
@@ -78,14 +78,14 @@ Vector.prototype.length = function() {
 
 Vector.prototype.normal = function () {
     if (this._normal === null) {
-        this._normal = new Vector(this.x / this.length(), this.y / this.length());
+        this._normal = this.normal();
         this._normal._normal = this._normal;
     }
     return this._normal;
 };
 
 Vector.prototype.scale = function(length){
-    var ratio = this.length() / length;
+    var ratio = length / this.length();
     return new Vector(this.x * ratio, this.y * ratio);
 };
 
@@ -99,7 +99,7 @@ function run_autominer() {
     var probes = [];
     probes.push(create.probe());
     var asteroids = [create.asteroid()];
-    var paused = false;
+    var blurred = false;
 
     function update() {
         render();
@@ -108,41 +108,42 @@ function run_autominer() {
     }
 
     function render() {
-        render_context.clearRect(0, 0, 600, 400);
-        function draw_asteroid(asteroid) {
-            draw.asteroid(render_context, asteroid)
+        if (!blurred) {
+            render_context.clearRect(0, 0, 600, 400);
+            function draw_asteroid(asteroid) {
+                draw.asteroid(render_context, asteroid)
+            }
+
+            function draw_probe(probe) {
+                draw.probe(render_context, probe)
+            }
+
+            asteroids.forEach(draw_asteroid);
+            draw.ship(render_context, ship);
+            probes.forEach(draw_probe);
         }
-        function draw_probe(probe) {
-            draw.probe(render_context, probe)
-        }
-        asteroids.forEach(draw_asteroid);
-        draw.ship(render_context, ship);
-        probes.forEach(draw_probe);
     }
 
     function tick() {
-        if (!paused) {
-            var new_time = Date.now();
-            var new_delta = new_time - time;
-            unspent_delta += new_delta;
-            accumulated_time += new_delta;
-            time = new_time;
-            while (unspent_delta > TIME_DELTA) {
-                unspent_delta -= TIME_DELTA;
+        var new_time = Date.now();
+        var new_delta = new_time - time;
+        unspent_delta += new_delta;
+        accumulated_time += new_delta;
+        time = new_time;
+        while (unspent_delta > TIME_DELTA) {
+            unspent_delta -= TIME_DELTA;
 
-                probes.forEach(simulate.probe);
-            }
+            probes.forEach(simulate.probe);
         }
     }
 
     function pause() {
-        paused = true;
+        blurred = true;
         console.debug("Paused");
     }
 
     function unpause() {
-        paused = false;
-        time = Date.now();
+        blurred = false;
         console.debug("Unpaused");
     }
 
