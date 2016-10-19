@@ -27,3 +27,34 @@ Sequence.prototype.walk = function (tree, agent) {
 
     }
 };
+
+function moveToTarget(mover, timeStep) {
+    /* Sets mover position one timeStep closer to target. */
+
+    if (mover.hasOwnProperty("pos")) {
+        var currentPos = mover.pos;
+    } else {
+        return error
+    }
+
+    if (mover.hasOwnProperty("target")) {
+        var target = mover.target;
+    } else {
+        return error
+    }
+
+    if (mover.hasOwnProperty("speed")) {
+        var speed = mover.speed * timeStep; // Game units per millisecond?
+    } else {
+        return error
+    }
+
+    var direction = target.sub(currentPos);
+    if (direction.length <= speed) {
+        mover.pos = mover.target;
+        return success
+    } else {
+        mover.pos = mover.pos.add(direction.scale(speed));
+        return running;
+    }
+}
