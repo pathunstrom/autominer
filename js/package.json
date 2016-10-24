@@ -1,0 +1,30 @@
+{
+  "name": "autominer",
+  "version": "0.1.0",
+  "description": "A javascript game.",
+  "main": "autominer.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "/Users/piper/src/autominer/js/node_modules/mocha/bin/mocha",
+    "build": "browserify -d -o am.js autominer.js"
+  },
+  "author": "Piper Thunstrom",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pathunstrom/autominer.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "bugs": {
+    "url": "https://github.com/pathunstrom/autominer/issues"
+  },
+  "homepage": "https://github.com/pathunstrom/autominer#readme"
+}

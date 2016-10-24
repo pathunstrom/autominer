@@ -1,6 +1,7 @@
 const Probe = require("./gameobjects/probe.js");
 const Beacon = require("./gameobjects/beacon.js");
-const timeStep = 16; // simulation timestep.
+const config = require("./configuration");
+const brain = require("./behaviors.js");
 
 var game = {
     spentDelta: 0,
@@ -8,8 +9,13 @@ var game = {
 };
 
 game.run = function () {
-    this.space.probes = [new Probe(20, 20)];
+
     this.space.beacons = [new Beacon(20, 20), new Beacon(580, 380)];
+
+    var probe = new Probe(20, 20);
+    probe.validTargets = this.space.beacons;
+    this.space.probes = [probe];
+
     var canvas = document.getElementById("autominer-canvas");
     view.renderContext = canvas.getContext("2d");
     view.render(game.space);
@@ -18,7 +24,7 @@ game.run = function () {
 
 game.update = function (time) {
     var unspentDelta = time - game.spentDelta;
-    for (; unspentDelta > timeStep; unspentDelta -= timeStep) {
+    for (; unspentDelta > config.timeStep; unspentDelta -= config.timeStep) {
         game.simulate()
     }
     game.spentDelta = time - unspentDelta;
@@ -30,7 +36,7 @@ game.simulate = function () {
     var space = game.space;
     Object.keys(space).forEach(function(key){
         space[key].forEach(function(obj){
-            obj.update(timeStep, space);
+            brain.act(obj);
         });
     });
 };
@@ -40,6 +46,8 @@ var view = {
 };
 
 view.render = function(space) {
+    view.renderContext.strokeStyle = "rgb(0, 0, 0)";
+    view.renderContext.fillRect(0, 0, 600, 400);
     Object.keys(space).forEach(function(key){
         space[key].forEach(function(obj){
             var pos = obj.pos;

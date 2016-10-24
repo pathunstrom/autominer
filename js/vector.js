@@ -13,7 +13,7 @@ Vector.prototype.sub = function (other) {
 
 Vector.prototype.add = function (other) {
     "use strict";
-    return new Vector(this.x + other.x, this.y - other.y);
+    return new Vector(this.x + other.x, this.y + other.y);
 };
 
 Vector.prototype.length = function () {
