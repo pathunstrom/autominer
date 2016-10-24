@@ -1,5 +1,5 @@
 const Vector = require("../vector.js");
-
+const Forest = require("../behaviortrees");
 // TODO: Consider Radar object. Customizable views.
 
 function Probe(x, y) {
@@ -12,10 +12,8 @@ function Probe(x, y) {
     this.behavior = null;
 }
 
-Probe.prototype.draw = function (canvas) {
+Probe.prototype.draw = function (canvas, x, y) {
     "use strict";
-    var x = this.pos.x;
-    var y = this.pos.y;
     canvas.strokeStyle = this.color;
     canvas.beginPath();
     canvas.arc(x, y, this.size, 0, Math.PI * 2);
@@ -24,7 +22,69 @@ Probe.prototype.draw = function (canvas) {
 
 Probe.prototype.update = function (timeStep) {
     "use strict";
-    this.behavior.act(this, timeStep);
+    // Forest.act(this, timeStep);
 };
+
+var behavior = {
+    "behavior": {
+        "name": "Basic Probe Behavior",
+        "kind": "priority",
+        "children": [
+            {
+                "name": "Move to Target if Available",
+                "kind": "hasTarget",
+                "children": [
+                    {
+                        "name": "Move To Target",
+                        "kind": "moveToTarget",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Select Furthest Target",
+                "kind": "selectFurthestTarget",
+                "children": []
+            }
+        ]
+
+    }
+};
+
+function hasTarget(Forest, name, children) {
+    return {
+        name: name,
+        forest: Forest,
+        child: children[0],
+        walk: function (hunter, timeStep, space) {
+            if (hunter.target !== null) {
+                return this.child.walk(hunter, timeStep, space)
+            } else {
+                return this.forest.FAILURE;
+            }
+        }
+    }
+}
+
+function moveToTarget(Forest, name, children) {
+    /* Sets mover position one timeStep closer to target. */
+    return {
+        name: name,
+        forest: Forest,
+        children: [],
+        walk: function (mover, timeStep, space) {
+            var direction = mover.target.pos.sub(mover.pos);
+            var displacement = mover.speed * timeStep;
+            if (direction.length <= displacement) {
+                mover.pos = mover.target.pos;
+                mover.target = null;
+                return this.forest.SUCCESS;
+            } else {
+                mover.pos = mover.pos.add(direction.scale(displacement));
+                return this.forest.RUNNING;
+            }
+        }
+    };
+}
 
 module.exports = Probe;

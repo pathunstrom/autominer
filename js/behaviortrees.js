@@ -17,7 +17,7 @@ function Forest(){
     this.trees = {};
     this.definitions = {};
     this.registerDefinition("sequence", this.Definition(Sequence, COMPOSITE));
-    // this.registerDefinition("priority", this.Definition(Priority, COMPOSITE));
+    this.registerDefinition("priority", this.Definition(Priority, COMPOSITE));
 }
 
 Forest.prototype.registerDefinition = function(name, definition) {
