@@ -1,7 +1,7 @@
-const Probe = require("src/gameobjects/probe.js");
-const Beacon = require("src/gameobjects/beacon.js");
-const config = require("src/configuration.js");
-const brain = require("src/behaviors.js");
+const Probe = require("./gameobjects/probe.js");
+const Beacon = require("./gameobjects/beacon.js");
+const config = require("./configuration.js");
+const brain = require("./behaviors.js");
 
 var game = {
     spentDelta: 0,
@@ -51,7 +51,7 @@ view.render = function(space) {
     Object.keys(space).forEach(function(key){
         space[key].forEach(function(obj){
             var pos = obj.pos;
-            obj.draw(view.renderContext, pos.x, pos.y);
+            obj.draw(view.renderContext, Math.floor(pos.x), Math.floor(pos.y));
         })
     })
 };

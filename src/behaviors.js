@@ -1,5 +1,5 @@
-const brain = require("src/brain.js");
-const config = require("src/configuration.js");
+const brain = require("./brain.js");
+const config = require("./configuration.js");
 
 function moveToTarget(actor) {
     var target = actor.target;
@@ -9,6 +9,7 @@ function moveToTarget(actor) {
     }
     var direction = target.pos.sub(actor.pos);  // Vector2
     var displacement = actor.speed * config.timeStep;
+    console.error("displacement: " + displacement);
     if (direction.length() <= displacement) {
         actor.pos = target.pos;
         actor.target = null;
