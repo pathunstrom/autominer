@@ -1,5 +1,5 @@
-const brain = require("./brain.js");
-const config = require("./configuration.js");
+const brain = require("src/brain.js");
+const config = require("src/configuration.js");
 
 function moveToTarget(actor) {
     var target = actor.target;

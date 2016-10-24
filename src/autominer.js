@@ -1,7 +1,7 @@
-const Probe = require("./gameobjects/probe.js");
-const Beacon = require("./gameobjects/beacon.js");
-const config = require("./configuration");
-const brain = require("./behaviors.js");
+const Probe = require("src/gameobjects/probe.js");
+const Beacon = require("src/gameobjects/beacon.js");
+const config = require("src/configuration.js");
+const brain = require("src/behaviors.js");
 
 var game = {
     spentDelta: 0,

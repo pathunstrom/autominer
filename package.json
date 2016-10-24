@@ -1,14 +1,14 @@
 {
   "name": "autominer",
   "version": "0.1.0",
-  "description": "A javascript game.",
+  "description": "A canvas based idle game.",
   "main": "autominer.js",
   "directories": {
-    "test": "tests"
+    "test": "test"
   },
   "scripts": {
-    "test": "/Users/piper/src/autominer/js/node_modules/mocha/bin/mocha",
-    "build": "browserify -d -o am.js autominer.js"
+    "test": "mocha",
+    "build": "browserify -d ./src/autominer.js -o ./resources/js/am.js"
   },
   "author": "Piper Thunstrom",
   "license": "ISC",
