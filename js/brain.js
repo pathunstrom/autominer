@@ -3,31 +3,14 @@ const SUCCESS = 1;
 const RUNNING = 2;
 
 function Brain() {
-    this.behaviors = {
-    };
-
-    var behaviors = Array.from(arguments);
-    var brain = this;
-    behaviors.forEach(function(behavior) {
-        var length = behavior.length;
-        if (length === undefined) {
-            if (typeof behavior == "function") {
-                brain.register(behavior);
-            } else {
-                brain.register(behavior.action, behavior.name)
-            }
-
-        } else if (length == 1) {
-            brain.register(behavior[0]);
-        } else {
-            brain.register(behavior[0], behavior[1])
-        }
-    });
+    this.behaviors = {};
     this.overwriteProtected = true;
 }
 
-Brain.prototype.act = new function act(actor) {
-    return this.behaviors[actor.behavior](actor);
+Brain.prototype.act = function (actor) {
+    if (actor.behavior !== undefined && actor.behavior !== null) {
+        return this.behaviors[actor.behavior](actor);
+    }
 };
 
 Brain.prototype.register = function(func, name) {
@@ -74,6 +57,8 @@ function sequence() {
 }
 
 exports.Brain = Brain;
+exports.priority = priority;
+exports.sequence = sequence;
 exports.RUNNING = RUNNING;
 exports.SUCCESS = SUCCESS;
 exports.FAILURE = FAILURE;
