@@ -1,5 +1,4 @@
 const Vector = require("../vector.js");
-const Forest = require("../behaviortrees");
 // TODO: Consider Radar object. Customizable views.
 
 function Probe(x, y) {
