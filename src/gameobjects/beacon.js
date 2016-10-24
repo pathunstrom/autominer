@@ -1,4 +1,4 @@
-const Vector = require("../vector.js");
+const Vector = require("src/vector.js");
 
 function Beacon(x, y){
     this.pos = new Vector(x, y);

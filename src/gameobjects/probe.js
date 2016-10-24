@@ -1,4 +1,4 @@
-const Vector = require("../vector.js");
+const Vector = require("src/vector.js");
 // TODO: Consider Radar object. Customizable views.
 
 function Probe(x, y) {

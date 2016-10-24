@@ -1,7 +1,7 @@
 var assert = require('assert');
 
 describe("Vector", function() {
-    var Vector = require('../vector.js');
+    var Vector = require('../src/vector.js');
     it('should be a function', function () {
         assert.equal(typeof Vector, 'function');
     });
