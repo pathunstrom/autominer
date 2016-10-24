@@ -15,6 +15,7 @@ function moveToTarget(actor) {
         return brain.SUCCESS;
     } else {
         actor.pos = actor.pos.add(direction.scale(displacement));
+        return brain.RUNNING;
     }
 }
 
