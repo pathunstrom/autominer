@@ -39,4 +39,8 @@ Vector.prototype.scale = function (length) {
     return new Vector(this.x * ratio, this.y * ratio);
 };
 
+Vector.prototype.toString = function () {
+    return "Vector(" + this.x + ", " + this.y + ")";
+};
+
 module.exports = Vector;
