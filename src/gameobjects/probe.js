@@ -19,9 +19,4 @@ Probe.prototype.draw = function (canvas, x, y) {
     canvas.stroke();
 };
 
-Probe.prototype.update = function (timeStep) {
-    "use strict";
-    // Forest.act(this, timeStep);
-};
-
 module.exports = Probe;
