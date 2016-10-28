@@ -2,6 +2,7 @@ const Probe = require("./gameobjects/probe.js");
 const Beacon = require("./gameobjects/beacon.js");
 const config = require("./configuration.js");
 const brain = require("./behaviors.js");
+const Controller = require("./controller.js");
 
 var game = {
     spentDelta: 0,
@@ -17,6 +18,7 @@ game.run = function () {
     this.space.probes = [probe];
 
     var canvas = document.getElementById("autominer-canvas");
+    var controller = new Controller(canvas, game.space);
     view.renderContext = canvas.getContext("2d");
     view.render(game.space);
     window.requestAnimationFrame(game.update)
