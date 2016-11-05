@@ -4,7 +4,6 @@ function Beacon(x, y) {
     this.origin = new Vector(300, 400);
     this.pos = this.origin;
     this.direction = new Vector(x, y).sub(this.pos);
-    console.log("Beacon direction: " + this.direction);
     this.targetDistance = this.direction.length();
     this.distance = 0;
     this.duration = 2000;

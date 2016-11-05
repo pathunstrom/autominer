@@ -55,22 +55,15 @@ function easeDistance(actor) {
         newDistance = circularEase(time, target, duration);
     } else {
         newDistance = target;
-        console.debug("Target reached.");
     }
-    console.log("Old distance: " + actor.distance);
-    console.log("New distance: " + newDistance);
     actor.distance = newDistance;
     actor.runTime = time;
     return brain.SUCCESS;
 }
 
 function updatePosition(actor) {
-    function logPosition(age, pos) {
-        console.debug(age + " position: " + pos.x + ", " + pos.y);
-    }
-    logPosition("Old", actor.pos);
+
     actor.pos = actor.direction.scale(actor.distance).add(actor.origin);
-    logPosition("New", actor.pos);
     return brain.SUCCESS;
 }
 
