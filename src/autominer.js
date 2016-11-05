@@ -3,6 +3,7 @@ const Beacon = require("./gameobjects/beacon.js");
 const config = require("./configuration.js");
 const brain = require("./behaviors.js");
 const Controller = require("./controller.js");
+const Player = require("./gameobjects/player.js");
 
 var game = {
     spentDelta: 0,
@@ -11,16 +12,22 @@ var game = {
 
 game.run = function () {
 
-    this.space.beacons = [new Beacon(20, 20), new Beacon(580, 380)];
+    this.space.beacons = [];
 
     var probe = new Probe(20, 20);
     probe.validTargets = this.space.beacons;
     this.space.probes = [probe];
 
     var canvas = document.getElementById("autominer-canvas");
-    var controller = new Controller(canvas, game.space);
+    game.player = new Player({account: 4});
+    var controller = new Controller(
+        canvas,
+        game.space,
+        game.player,
+        {beacon: 1}
+    );
     view.renderContext = canvas.getContext("2d");
-    view.render(game.space);
+    view.render(game.space, game.player);
     window.requestAnimationFrame(game.update)
 };
 
@@ -30,7 +37,7 @@ game.update = function (time) {
         game.simulate()
     }
     game.spentDelta = time - unspentDelta;
-    view.render(game.space);
+    view.render(game.space, game.player);
     window.requestAnimationFrame(game.update)
 };
 
@@ -47,7 +54,7 @@ var view = {
     renderContext: null
 };
 
-view.render = function(space) {
+view.render = function(space, player) {
     view.renderContext.strokeStyle = "rgb(0, 0, 0)";
     view.renderContext.fillRect(0, 0, 600, 400);
     Object.keys(space).forEach(function(key){
@@ -55,8 +62,14 @@ view.render = function(space) {
             var pos = obj.pos;
             obj.draw(view.renderContext, Math.floor(pos.x), Math.floor(pos.y));
         })
-    })
+    });
+    updateScores(player);
 };
+
+function updateScores(player) {
+    var currencyDisplay = document.getElementById("player-account");
+    currencyDisplay.textContent = player.account;
+}
 
 document.addEventListener("DOMContentLoaded", function(){
     game.run();

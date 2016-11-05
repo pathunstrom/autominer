@@ -1,10 +1,10 @@
 body {
     background-color: black;
+    color: ghostwhite;
 }
 
 h1 {
     font-family: Impact, sans-serif;
-    color: ghostwhite;
 }
 
 canvas {
