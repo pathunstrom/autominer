@@ -1,6 +1,6 @@
 const Vector = require("../vector.js");
 
-function Beacon(x, y) {
+function Beacon(x, y, space) {
     this.origin = new Vector(300, 400);
     this.pos = this.origin;
     this.direction = new Vector(x, y).sub(this.pos);
@@ -8,6 +8,7 @@ function Beacon(x, y) {
     this.distance = 0;
     this.duration = 2000;
     this.runTime = 0;
+    this.space = space;
 
     this.color = "rgb(200, 200, 255)";
     this.size = 3;

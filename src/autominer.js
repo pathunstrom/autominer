@@ -1,5 +1,4 @@
 const Probe = require("./gameobjects/probe.js");
-const Beacon = require("./gameobjects/beacon.js");
 const config = require("./configuration.js");
 const brain = require("./behaviors.js");
 const Controller = require("./controller.js");
@@ -14,7 +13,7 @@ game.run = function () {
 
     this.space.beacons = [];
 
-    var probe = new Probe(20, 20);
+    var probe = new Probe(20, 20, this.space);
     probe.validTargets = this.space.beacons;
     this.space.probes = [probe];
 

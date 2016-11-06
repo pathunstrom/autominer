@@ -1,7 +1,7 @@
 const Vector = require("../vector.js");
 // TODO: Consider Radar object. Customizable views.
 
-function Probe(x, y) {
+function Probe(x, y, space) {
     "use strict";
     this.pos = new Vector(x, y);
     this.size = 5;
@@ -9,6 +9,7 @@ function Probe(x, y) {
     this.target = null;
     this.color = "rgb(200, 255, 220)"; // TODO: Add parameters.
     this.behavior = "basicProbe";
+    this.space = space;
 }
 
 Probe.prototype.draw = function (canvas, x, y) {
