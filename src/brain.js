@@ -9,8 +9,12 @@ function Brain() {
 
 Brain.prototype.act = function (actor) {
     if (actor.behavior !== undefined && actor.behavior !== null) {
-        return this.behaviors[actor.behavior](actor);
+        return this.get(actor.behavior)(actor);
     }
+};
+
+Brain.prototype.get = function(name) {
+    return this.behaviors[name]
 };
 
 Brain.prototype.register = function(func, name) {
