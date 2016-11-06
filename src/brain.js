@@ -60,9 +60,18 @@ function sequence() {
     }
 }
 
+function alwaysSucceed(behavior) {
+    function alwaysSucceedModifier(actor) {
+        behavior(actor);
+        return SUCCESS;
+    }
+    return alwaysSucceedModifier;
+}
+
 exports.Brain = Brain;
 exports.priority = priority;
 exports.sequence = sequence;
+exports.alwaysSucceed = alwaysSucceed;
 exports.RUNNING = RUNNING;
 exports.SUCCESS = SUCCESS;
 exports.FAILURE = FAILURE;
