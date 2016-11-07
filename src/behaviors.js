@@ -127,6 +127,13 @@ function cleanUpEasing(actor) {
     }
 }
 
+function logMessage(message) {
+    return function() {
+        console.log(message);
+        return brain.SUCCESS;
+    }
+}
+
 var probeBrain = new brain.Brain();
 probeBrain.register(moveToTarget);
 probeBrain.register(chooseFurthestTarget);
