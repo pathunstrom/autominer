@@ -32,18 +32,34 @@ function potentialTargets(targetType, validate) {
     return getTargets;
 }
 
+function chooseClosestTarget(actor) {
+    console.log("Choosing closest target.");
+    var closest = {target: null, distance: Infinity};
+
+    actor.potentialTargets.forEach(function(target){
+        var distance = target.pos.sub(actor.pos).length();
+        if (distance < closest.distance) {
+            closest = {target: target, distance: distance};
+        }
+    });
+
+    actor.target = closest.target;
+    return brain.SUCCESS;
+}
+
 function chooseFurthestTarget(actor) {
+    console.log("Choosing Furthest Target");
     var furthest = {target: null, distance: 0};
-    if (!actor.hasOwnProperty("validTargets")) {
+    if (!actor.hasOwnProperty("potentialTargets")) {
+
         return brain.FAILURE;
     }
-    actor.validTargets.forEach(function(target){
+    actor.potentialTargets.forEach(function(target){
         var distance = target.pos.sub(actor.pos).length();
         if (distance > furthest.distance) {
             furthest = {target: target, distance: distance}
         }
     });
-
     actor.target = furthest.target;
     return brain.SUCCESS
 }
