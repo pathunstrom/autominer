@@ -17,7 +17,7 @@ Controller.prototype.click = function (event) {
         console.debug("Withdraw successful.");
         var x = event.offsetX;
         var y = event.offsetY;
-        this.space.beacons.push(new Beacon(x, y, this.space));
+        this.space.beacon.push(new Beacon(x, y, this.space));
     }
 };
 

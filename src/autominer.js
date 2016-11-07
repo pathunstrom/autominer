@@ -11,10 +11,9 @@ var game = {
 
 game.run = function () {
 
-    this.space.beacons = [];
+    this.space.beacon = [];
 
     var probe = new Probe(20, 20, this.space);
-    probe.validTargets = this.space.beacons;
     this.space.probes = [probe];
 
     var canvas = document.getElementById("autominer-canvas");
