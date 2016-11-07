@@ -13,10 +13,21 @@ function ifNoTarget(behavior) {
     return modifier;
 }
 
-function potentialTargets(targetType) {
+function potentialTargets(targetType, validate) {
+    if (validate === undefined) {
+        validate = function() {return true;}
+    }
+
     function getTargets(actor) {
-        actor.potentialTargets = actor.space[targetType];
-        return brain.SUCCESS;
+        console.log("Potentienal " + targetType + " targets.");
+        var candidates = actor.space[targetType];
+        if (candidates !== undefined) {
+            actor.potentialTargets = candidates.filter(validate);
+            return brain.SUCCESS;
+        } else {
+            return brain.FAILURE;
+        }
+
     }
     return getTargets;
 }
