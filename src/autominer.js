@@ -30,13 +30,13 @@ game.run = function () {
 };
 
 game.update = function (time) {
+    window.requestAnimationFrame(game.update);
     var unspentDelta = time - game.spentDelta;
     for (; unspentDelta > config.timeStep; unspentDelta -= config.timeStep) {
         game.simulate()
     }
     game.spentDelta = time - unspentDelta;
     view.render(game.space, game.player);
-    window.requestAnimationFrame(game.update)
 };
 
 game.simulate = function () {
