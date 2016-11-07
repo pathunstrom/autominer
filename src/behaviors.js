@@ -140,6 +140,7 @@ probeBrain.register(chooseFurthestTarget);
 probeBrain.register(potentialTargets("beacon"), "potentialBeacons");
 probeBrain.register(
     brain.sequence(
+        logMessage("Running collectBeacon"),
         probeBrain.get("potentialBeacons"),
         brain.alwaysSucceed(ifNoTarget(chooseClosestTarget)),
         moveToTarget,
@@ -148,7 +149,7 @@ probeBrain.register(
     ),
     "collectBeacon"
 );
-probeBrain.register(
+/* probeBrain.register(
     brain.sequence(
         ifFull(targetOrigin),
         moveToTarget,
@@ -156,9 +157,10 @@ probeBrain.register(
         clearTarget
     ),
     "deliverProbes"
-);
+); */
 probeBrain.register(
     brain.sequence(
+        logMessage("Running basicProbe"),
         probeBrain.get("potentialBeacons"),
         brain.alwaysSucceed(ifNoTarget(chooseFurthestTarget)),
         moveToTarget,
