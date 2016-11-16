@@ -1,7 +1,6 @@
 const brain = require("./brain.js");
 const config = require("./configuration.js");
 
-
 function ifNoTarget(behavior) {
     function modifier(actor) {
         if (actor.target === null || actor.target === undefined) {
@@ -64,7 +63,13 @@ function chooseFurthestTarget(actor) {
     return brain.SUCCESS
 }
 
-
+function collectTarget(carrier) {
+    if (carrier.store(carrier.target)) {
+        carrier.space.remove(carrier.target);
+        return brain.SUCCESS;
+    }
+    return brain.FAILURE;
+}
 
 function moveToTarget(actor) {
     var target = actor.target;
