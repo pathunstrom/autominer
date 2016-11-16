@@ -9,11 +9,11 @@ function Beacon(x, y, space) {
     this.duration = 2000;
     this.runTime = 0;
     this.space = space;
-
+    this.alive = true;
     this.color = "rgb(200, 200, 255)";
     this.size = 3;
 
-    this.behavior = "launchBeacon";
+    this.behavior = "beacon";
 }
 
 Beacon.prototype.draw = function (canvas, x, y) {

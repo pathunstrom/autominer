@@ -65,7 +65,7 @@ function chooseFurthestTarget(actor) {
 
 function collectTarget(carrier) {
     if (carrier.store(carrier.target)) {
-        carrier.space.remove(carrier.target);
+        carrier.target.alive = false;
         return brain.SUCCESS;
     }
     return brain.FAILURE;
@@ -139,6 +139,20 @@ function logMessage(message) {
     }
 }
 
+function removeFromSpace(actor) {
+    if (actor.alive) {
+        return brain.FAILURE;
+    } else {
+        actor.space.remove(actor);
+        return brain.SUCCESS;
+    }
+}
+
+function advanceDataScan(actor) {
+    actor.dataPayload += 1;
+    return brain.SUCCESS
+}
+
 var probeBrain = new brain.Brain();
 probeBrain.register(moveToTarget);
 probeBrain.register(chooseFurthestTarget);
@@ -177,5 +191,13 @@ probeBrain.register(
         circularEaseDistance,
         updateEasedPosition,
         cleanUpEasing),
-    "launchBeacon");
+    "launch");
+probeBrain.register(
+    brain.priority(
+        probeBrain.get("launch"),
+        removeFromSpace,
+        advanceDataScan
+    ),
+    "beacon"
+);
 module.exports = probeBrain;
