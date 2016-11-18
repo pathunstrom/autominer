@@ -21,6 +21,13 @@ describe("Vector", function() {
                 var displacement = new Vector(3, 5);
                 assert.deepEqual(position.add(displacement), new Vector(5, 9));
             })
-        })
-    })
+        });
+
+        describe("length()", function() {
+            it("should return a value", function(){
+                var vector = new Vector(0, 1);
+                assert.equal(vector.length(), 1, "Wrong length.")
+            });
+        });
+    });
 });

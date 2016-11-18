@@ -19,7 +19,7 @@ Vector.prototype.add = function (other) {
 Vector.prototype.length = function () {
     "use strict";
     if (this._length === null) {
-        this._length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.x, 2));
+        this._length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     }
     return this._length;
 };
